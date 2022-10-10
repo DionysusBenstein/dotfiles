@@ -1,0 +1,6 @@
+*.swp
+*.swo
+*.retry
+*.log
+.DS_Store
+nvim/plugin/*
