@@ -51,7 +51,7 @@ return require('packer').startup(function(use)
  use {
     'glepnir/dashboard-nvim',
     config = {
-     require('plugins.config.dashboard').setup()
+      require('plugins.config.dashboard').setup()
     }
   }
 
@@ -61,7 +61,7 @@ return require('packer').startup(function(use)
     'windwp/nvim-autopairs',
     config = function()
       require('nvim-autopairs').setup()
-    end 
+    end
   }
 
   use {
@@ -76,6 +76,17 @@ return require('packer').startup(function(use)
     config = function()
       require('indent_blankline').setup {
         show_current_context = true,
+      }
+    end
+  }
+
+  use {
+    'akinsho/toggleterm.nvim',
+    tag = '*',
+    config = function()
+      require('toggleterm').setup {
+        direction = 'float',
+        open_mappint = '[[<leader>t]]',
       }
     end
   }

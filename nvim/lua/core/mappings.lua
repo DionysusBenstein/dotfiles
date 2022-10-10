@@ -4,6 +4,7 @@ local opts = { silent = true, noremap = true }
 
 bind('i', 'jk', '<ESC>', opts)
 bind('n', '<leader><leader>', ':NvimTreeToggle<CR>', opts)
+bind('n', '<leader>t', ':ToggleTerm<CR>', opts)
 
 -- moving between visible buffers 
 bind("n", "<C-l>", "<C-w>l", opts)
@@ -19,7 +20,7 @@ bind('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 M.lsp_on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
