@@ -2,9 +2,25 @@ local M = {}
 local bind = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
+-- Modes
+-- normal_mode = 'n'
+-- insert_mode = 'i'
+-- visual_mode = 'v'
+-- visual_block_mode = 'x'
+-- term_mode = 't'
+-- command_mode = 'c'
+
 bind('i', 'jk', '<ESC>', opts)
 bind('n', '<leader><leader>', ':NvimTreeToggle<CR>', opts)
+
 bind('n', '<leader>t', ':ToggleTerm<CR>', opts)
+bind('t', '<leader>t', ':ToggleTerm<CR>', opts)
+bind('t', '<esc>', [[<C-\><C-n>]], opts)
+bind('t', 'jk', [[<C-\><C-n>]], opts)
+bind('t', '<C-h>', '<cmd>wincmd h<CR>', opts)
+bind('t', '<C-j>', '<cmd>wincmd j<CR>', opts)
+bind('t', '<C-k>', '<cmd>wincmd k<CR>', opts)
+bind('t', '<C-l>', '<cmd>wincmd l<CR>', opts)
 
 -- moving between visible buffers 
 bind("n", "<C-l>", "<C-w>l", opts)
