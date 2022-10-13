@@ -1,4 +1,5 @@
 local M = {}
+local builtin = require('telescope.builtin')
 local bind = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
@@ -9,6 +10,11 @@ local opts = { silent = true, noremap = true }
 -- visual_block_mode = 'x'
 -- term_mode = 't'
 -- command_mode = 'c'
+
+-- Stay in indent mode
+
+bind('v', '<Tab>', '<gv', opts)
+bind('v', '<Tab>', '>gv', opts)
 
 bind('i', 'jk', '<ESC>', opts)
 bind('n', '<leader><leader>', ':NvimTreeToggle<CR>', opts)
@@ -21,6 +27,12 @@ bind('t', '<C-h>', '<cmd>wincmd h<CR>', opts)
 bind('t', '<C-j>', '<cmd>wincmd j<CR>', opts)
 bind('t', '<C-k>', '<cmd>wincmd k<CR>', opts)
 bind('t', '<C-l>', '<cmd>wincmd l<CR>', opts)
+
+-- telescope
+bind('n', 'ff', builtin.find_files, opts)
+bind('n', 'fg', builtin.live_grep, opts)
+bind('n', 'fb', builtin.buffers, opts) 
+bind('n', 'fh', builtin.help_tags, opts)
 
 -- moving between visible buffers 
 bind("n", "<C-l>", "<C-w>l", opts)
