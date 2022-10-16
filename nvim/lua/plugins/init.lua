@@ -1,20 +1,11 @@
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+require('plugins.disable_builtins')
 
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-
-  return false
-end
-
-local packer_bootstrap = ensure_packer()
+local utils = require('plugins.utils')
+local packer_bootstrap = utils.ensure_packer()
 
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+  use 'folke/tokyonight.nvim'
 
   use {
     'folke/which-key.nvim',
@@ -29,33 +20,23 @@ return require('packer').startup(function(use)
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      require('nvim-tree').setup {
-        view = {
-          adaptive_size = true
-        }
-      }
+      require('plugins.config.nvim_tree')
     end
   }
 
   use {
     'nvim-lualine/lualine.nvim',
     config = function()
-      require('lualine').setup {
-        options = {
-          theme = 'tokyonight'
-        }
-      }
+      require('plugins.config.lualine')
     end
   }
 
- use {
+  use {
     'glepnir/dashboard-nvim',
-    config = {
-      require('plugins.config.dashboard').setup()
-    }
+    config = function()
+      require('plugins.config.dashboard')
+    end 
   }
-
-  use 'folke/tokyonight.nvim'
 
   use {
     'windwp/nvim-autopairs',
@@ -74,9 +55,7 @@ return require('packer').startup(function(use)
   use {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
-      require('indent_blankline').setup {
-        show_current_context = true,
-      }
+      require('plugins.config.indent_blankline')
     end
   }
 
@@ -84,10 +63,7 @@ return require('packer').startup(function(use)
     'akinsho/toggleterm.nvim',
     tag = '*',
     config = function()
-      require('toggleterm').setup {
-        direction = 'float',
-        open_mappint = '[[<leader>t]]',
-      }
+      require('plugins.config.toggleterm')
     end
   }
 
@@ -102,61 +78,84 @@ return require('packer').startup(function(use)
     'nvim-treesitter/nvim-treesitter',
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
     config = function()
-      require('nvim-treesitter.configs').setup {
-        ensure_installed = 'all',
-        auto_install = true,
+      require('plugins.config.treesitter')
+    end
+  }
 
-        disable = function(lang, buf)
-          local max_filesize = 100 * 1024 -- 100 KB
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-          if ok and stats and stats.size > max_filesize then
-            return true
-          end
-        end,
+  use 'nvim-treesitter/nvim-treesitter-context'
 
-        highlight = {
-          enable = true
-        },
+  use {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.0',
+    requires = { 'nvim-lua/plenary.nvim' }
+  }
 
-        indent = {
-          enable = true
-        }
-      }
+  use 'ray-x/lsp_signature.nvim'
+
+  use 'onsails/lspkind-nvim'
+  
+  use {
+		'folke/trouble.nvim',
+		requires = 'kyazdani42/nvim-web-devicons',
+		config = function()
+			require('trouble').setup()
+		end,
+	}
+
+  use {
+    'j-hui/fidget.nvim',
+    config = function()
+      require('fidget').setup()
     end
   }
 
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.0',
-    requires = { 'nvim-lua/plenary.nvim' }
+    'kylechui/nvim-surround',
+    config = function()
+        require('nvim-surround').setup()
+    end
   }
 
   use {
+    'simrat39/symbols-outline.nvim',
+    config = function()
+      require('symbols-outline').setup()
+    end
+  }
+
+  use {
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'rafamadriz/friendly-snippets',
+    },
+    config = function()
+      require('plugins.config.cmp')
+    end
+  }
+
+  require('luasnip.loaders.from_vscode').lazy_load()
+
+  use {
     'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
+    config = function()
+      require('plugins.config.mason')
+    end
+  }
+
+  use {
     'neovim/nvim-lspconfig',
-  }
-
-  require('mason').setup()
-  local mason_lspconfig = require('mason-lspconfig')
-
-  mason_lspconfig.setup {
-    ensure_installed = {
-      --[[ Language Servers ]]
-      'tsserver',
-      'sumneko_lua',
-      'bashls',
-      'jsonls',
-      'yamlls',
-      'html',
-      'cssls',
-    }
-  }
-
-  mason_lspconfig.setup_handlers {
-    function(server_name)
-      require('lspconfig')[server_name].setup {
-        on_attach = require('core.mappings').lsp_on_attach()
-      }
+    requires = {
+      'williamboman/mason-lspconfig.nvim',
+    },
+    config = function()
+      require('mason').setup()
+      require('plugins.config.lsp')
     end
   }
 

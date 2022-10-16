@@ -6,6 +6,7 @@ local options = {
   swapfile = false,
   cursorline = true,
   wrap = false,
+  clipboard = 'unnamedplus',
 
   -- Indenting
   autoindent = true,
@@ -31,6 +32,8 @@ local globals = {
   loaded = 1,
   loaded_netrwPlugin = 1,
 } 
+
+vim.cmd [[autocmd BufEnter * set fo-=c fo-=r fo-=o]]
 
 for k, v in pairs(options) do
   vim.opt[k] = v
