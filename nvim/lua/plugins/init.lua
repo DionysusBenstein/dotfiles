@@ -6,6 +6,7 @@ local packer_bootstrap = utils.ensure_packer()
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'folke/tokyonight.nvim'
+  use 'sainnhe/gruvbox-material'
 
   use {
     'folke/which-key.nvim',
