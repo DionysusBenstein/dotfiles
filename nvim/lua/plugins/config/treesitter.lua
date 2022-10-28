@@ -2,6 +2,21 @@ local treesitter = require('nvim-treesitter.configs')
 
 treesitter.setup {
   ensure_installed = 'all',
+
+  -- ensure_installed = {
+  --   'bash', 'c', 'c_sharp',
+  --   'cmake', 'comment', 'commonlisp',
+  --   'cpp', 'css', 'cuda',
+  --   'diff', 'dockerfile', 'gitattributes',
+  --   'gitignore', 'go', 'gomod',
+  --   'gowork', 'graphql', 'help',
+  --   'hjson', 'hlsl', 'html',
+  --   'http', 'java', 'javascript',
+  --   'jsdoc', 'json', 'json5',
+  --   'jsonc', 'latex', 'llvm',
+  --   'lua', 'make', 'markdown',
+  -- },
+
   auto_install = true,
 
   disable = function(lang, buf)
