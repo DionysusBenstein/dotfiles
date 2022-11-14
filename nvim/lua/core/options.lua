@@ -7,14 +7,23 @@ local options = {
   cursorline = true,
   wrap = false,
   clipboard = 'unnamedplus',
+  cmdheight = 0,
+  completeopt = { 'menuone', 'noselect' },
+  fileencoding = 'utf-8',
+  fillchars = { eob = ' ' },
+  lazyredraw = true,
+  scrolloff = 8,
+  sidescrolloff = 8,
 
   -- Indenting
   autoindent = true,
+  copyindent = true,
   smartindent = true,
   tabstop = 2,
   softtabstop = 2,
   shiftwidth = 2,
   expandtab = true,
+  preserveindent = true,
 
   -- Numbers
   number = true,

@@ -1,4 +1,3 @@
-local mappings = require('core.mappings')
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 

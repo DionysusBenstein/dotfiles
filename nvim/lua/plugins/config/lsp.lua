@@ -1,4 +1,31 @@
 local mason_lspconfig = require('mason-lspconfig')
+local bind = vim.keymap.set
+
+local lsp_on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  require 'lsp_signature'.on_attach({}, bufnr)
+
+  bind('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  bind('n', 'gd', vim.lsp.buf.definition, bufopts)
+  bind('n', 'K', vim.lsp.buf.hover, bufopts)
+  bind('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  bind('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  bind('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  bind('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  bind('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  bind('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  bind('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  bind('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  bind('n', 'gr', vim.lsp.buf.references, bufopts)
+  bind('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+end
 
 mason_lspconfig.setup {
   ensure_installed = {
@@ -13,8 +40,6 @@ mason_lspconfig.setup {
   }
 }
 
--- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 
@@ -25,8 +50,18 @@ end
 mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
-      on_attach = require('core.mappings').lsp_on_attach(),
+      on_attach = lsp_on_attach(),
       capabilities = capabilities
     }
   end
 }
+
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    update_in_insert = true,
+    signs = true,
+    virtual_text = true,
+  }
+)
+

@@ -1,6 +1,6 @@
 local M = {}
 
-M.ensure_packer = function()
+M.initialize_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -11,6 +11,10 @@ M.ensure_packer = function()
   end
 
   return false
+end
+
+M.get_icon = function(kind)
+  
 end
 
 return M

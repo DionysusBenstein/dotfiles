@@ -1,5 +1,3 @@
-local M = {}
-
 local bind = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
@@ -12,11 +10,12 @@ local opts = { silent = true, noremap = true }
 -- command_mode = 'c'
 
 -- Stay in indent mode
-bind('v', '<Tab>', '<gv', opts)
+bind('v', '<Backspace>', '<gv', opts)
 bind('v', '<Tab>', '>gv', opts)
 
 bind('i', 'jk', '<ESC>', opts)
-bind('n', '<leader><leader>', ':NvimTreeToggle<CR>', opts)
+bind('n', '<space>h', '<cmd>noh<cr>', opts)
+bind('n', '<leader><leader>', '<cmd>Neotree toggle<CR>', opts)
 
 bind('t', '<esc>', [[<C-\><C-n>]], opts)
 bind('t', 'jk', [[<C-\><C-n>]], opts)
@@ -37,30 +36,26 @@ bind('n', '[d', vim.diagnostic.goto_prev, opts)
 bind('n', ']d', vim.diagnostic.goto_next, opts)
 bind('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-M.lsp_on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap = true, silent = true, buffer = bufnr }
-  require 'lsp_signature'.on_attach({}, bufnr)
+-- terminal
+bind('n', '<leader>t', '<cmd>ToggleTerm<CR>', opts)
+bind('t', '<leader>t', '<cmd>ToggleTerm<CR>', opts)
 
-  bind('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  bind('n', 'gd', vim.lsp.buf.definition, bufopts)
-  bind('n', 'K', vim.lsp.buf.hover, bufopts)
-  bind('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  bind('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  bind('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  bind('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  bind('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  bind('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  bind('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  bind('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  bind('n', 'gr', vim.lsp.buf.references, bufopts)
-  bind('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-end
+-- luasnip
+bind('i', '<C-j>', '<cmd>lua require("luasnip").jump(1)<CR>', opts)
+bind('s', '<C-j>', '<cmd>lua require("luasnip").jump(1)<CR>', opts)
+bind('i', '<C-k>', '<cmd>lua require("luasnip").jump(-1)<CR>', opts)
+bind('s', '<C-k>', '<cmd>lua require("luasnip").jump(-1)<CR>', opts)
 
-return M
+-- telescope
+bind('n', 'ff', '<cmd>Telescope find_files<CR>', opts)
+bind('n', 'fg', '<cmd>Telescope live_grep<CR>', opts)
+bind('n', 'fb', '<cmd>Telescope buffers<CR>', opts) 
+bind('n', 'fh', '<cmd>Telescope help_tags<CR>', opts)
+
+-- trouble
+bind('n', '<leader>x', '<cmd>TroubleToggle<CR>', opts)
+bind('n','gr', '<cmd>Trouble lsp_references<CR>', opts)
+
+-- symbols-outline
+bind('n', '<leader>s', ':SymbolsOutline<CR>', opts)
