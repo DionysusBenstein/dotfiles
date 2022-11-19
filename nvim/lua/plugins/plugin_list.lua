@@ -24,13 +24,15 @@ local plugin_list = {
     requires = {
       'MunifTanjim/nui.nvim',
     },
-    config = require('plugins.config.neo-tree')
+    config = function()
+        require('plugins.config.neo-tree')
+      end
   },
 
   ['glepnir/dashboard-nvim'] = {
     config = function()
       require('plugins.config.dashboard')
-    end 
+    end
   },
 
   ['windwp/nvim-autopairs'] = {
@@ -64,12 +66,12 @@ local plugin_list = {
     end
   },
 
-  ['nvim-treesitter/nvim-treesitter'] = {
-    run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
-    config = function()
-      require('plugins.config.treesitter')
-    end
-  },
+  -- ['nvim-treesitter/nvim-treesitter'] = {
+  --   run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+  --   config = function()
+  --     require('plugins.config.treesitter')
+  --   end
+  -- },
 
   ['nvim-telescope/telescope.nvim'] = {
     tag = '0.1.0',
@@ -107,7 +109,7 @@ local plugin_list = {
 
   ['RRethy/vim-illuminate'] = {
     config = function()
-      require('config.illuminate')
+      require('plugins.config.illuminate')
     end
   },
 
