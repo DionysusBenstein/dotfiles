@@ -1,9 +1,14 @@
 local mason_lspconfig = require('mason-lspconfig')
 local bind = vim.keymap.set
 
-local lsp_on_attach = function(client, bufnr)
+local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  --[[ if client.server_capabilities.documentSymbolProvider then
+    local navic = require('nvim-navic')
+    navic.attach(client, bufnr)
+  end ]]
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -50,18 +55,8 @@ end
 mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
-      on_attach = lsp_on_attach(),
+      on_attach = on_attach(),
       capabilities = capabilities
     }
   end
 }
-
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    update_in_insert = true,
-    signs = true,
-    virtual_text = true,
-  }
-)
-

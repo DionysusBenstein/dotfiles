@@ -18,6 +18,6 @@ local builtInPlugins = {
   'logipat'
 }
 
-for null, plugin in pairs(builtInPlugins) do
+for _, plugin in pairs(builtInPlugins) do
   vim.g['loaded_' .. plugin] = 1
 end

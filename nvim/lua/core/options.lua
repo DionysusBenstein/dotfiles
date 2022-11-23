@@ -40,14 +40,14 @@ local globals = {
   mapleader = ' ',
   loaded = 1,
   loaded_netrwPlugin = 1,
-} 
+}
 
-vim.cmd [[autocmd BufEnter * set fo-=c fo-=r fo-=o]]
+vim.cmd('autocmd BufEnter * set fo-=c fo-=r fo-=o')
 
-for k, v in pairs(options) do
-  vim.opt[k] = v
+for key, value in pairs(options) do
+  vim.opt[key] = value
 end
 
-for k, v in pairs(globals) do
-  vim.g[k] = v
+for key, value in pairs(globals) do
+  vim.g[key] = value
 end

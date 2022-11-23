@@ -54,7 +54,6 @@ local plugin_list = {
   },
 
   ['akinsho/toggleterm.nvim'] = {
-    tag = '*',
     config = function()
       require('plugins.config.toggleterm')
     end
@@ -66,19 +65,23 @@ local plugin_list = {
     end
   },
 
-  -- ['nvim-treesitter/nvim-treesitter'] = {
-  --   run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
-  --   config = function()
-  --     require('plugins.config.treesitter')
-  --   end
-  -- },
+  ['nvim-treesitter/nvim-treesitter'] = {
+    run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+    config = function()
+      require('plugins.config.treesitter')
+    end
+  },
 
   ['nvim-telescope/telescope.nvim'] = {
     tag = '0.1.0',
     requires = { 'nvim-lua/plenary.nvim' }
   },
 
-  ['ray-x/lsp_signature.nvim'] = {},
+  ['ray-x/lsp_signature.nvim'] = {
+    config = function()
+      require('lsp_signature').setup()
+    end
+  },
 
   ['onsails/lspkind-nvim'] = {},
 
@@ -110,6 +113,14 @@ local plugin_list = {
   ['RRethy/vim-illuminate'] = {
     config = function()
       require('plugins.config.illuminate')
+    end
+  },
+
+  ['SmiteshP/nvim-navic'] = {
+    requires = 'neovim/nvim-lspconfig',
+    config = function()
+      require('nvim-navic').setup()
+      -- vim.opt.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
     end
   },
 

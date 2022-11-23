@@ -24,6 +24,8 @@ bind('t', '<C-j>', '<cmd>wincmd j<CR>', opts)
 bind('t', '<C-k>', '<cmd>wincmd k<CR>', opts)
 bind('t', '<C-l>', '<cmd>wincmd l<CR>', opts)
 
+bind('n', '<leader>fn' , '<cmd>enew<cr>', opts)
+
 -- moving between visible buffers 
 bind('n', '<C-l>', '<C-w>l', opts)
 bind('n', '<C-h>', '<C-w>h', opts)
