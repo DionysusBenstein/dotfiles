@@ -1,7 +1,7 @@
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 
-cmp.setup({
+cmp.setup {
   formatting = {
     format = lspkind.cmp_format {
       mode = 'symbol',
@@ -33,7 +33,7 @@ cmp.setup({
    { name = 'luasnip' },
    { name = 'nvim_lua' },
   })
- })
+ }
 
  -- Set configuration for specific filetype.
  --[[ cmp.setup.filetype('gitcommit', {

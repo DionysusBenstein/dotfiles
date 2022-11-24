@@ -29,9 +29,9 @@ local plugin_list = {
       end
   },
 
-  ['glepnir/dashboard-nvim'] = {
-    config = function()
-      require('plugins.config.dashboard')
+  ['goolord/alpha-nvim'] = {
+    config = function ()
+      require('plugins.config.alpha')
     end
   },
 
@@ -120,7 +120,6 @@ local plugin_list = {
     requires = 'neovim/nvim-lspconfig',
     config = function()
       require('nvim-navic').setup()
-      -- vim.opt.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
     end
   },
 

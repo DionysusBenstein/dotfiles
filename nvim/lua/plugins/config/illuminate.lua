@@ -27,6 +27,5 @@ illuminate.configure {
     'toggleterm',
     'DressingSelect',
     'TelescopePrompt',
-    'dashboard',
   },
 }

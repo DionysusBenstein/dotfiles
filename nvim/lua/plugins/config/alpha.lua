@@ -1,6 +1,9 @@
-local db = require('dashboard')
+local alpha = require('alpha')
+local db = require('alpha.themes.dashboard')
 
-db.custom_header = {
+db.section.header.val = {
+  '',
+  '',
   '',
   '',
   ' ▄▄▄▄   ▓█████  ███▄    █   ██████ ▄▄▄█████▓▓█████  ██▓ ███▄    █ ',
@@ -17,24 +20,25 @@ db.custom_header = {
   '',
 }
 
--- astronvim.alpha_button('LDR f f', '  Find File  '),
--- astronvim.alpha_button('LDR f o', '  Recents  '),
--- astronvim.alpha_button('LDR f w', '  Find Word  '),
--- astronvim.alpha_button('LDR f n', '  New File  '),
--- astronvim.alpha_button('LDR f m', '  Bookmarks  '),
--- astronvim.alpha_button('LDR S l', '  Last Session  '),
+db.section.header.opts.hl = 'Identifier'
 
-db.custom_center = {
-  {
-    icon = '  ',
-    desc = 'Find File          ',
-    shortcut = 'f f',
-    action = 'Telescope find_files'
-  },
-  {
-    icon = '  ',
-    desc = 'New File          ',
-    shortcut = 'LDR f f',
-    action = 'enew'
-  },
+db.section.buttons.val = {
+  db.button('fn', '  > New File' , '<cmd>ene <BAR> startinsert <CR>'),
+  db.button('ff', '  > Find File', '<cmd>Telescope find_files<CR>'),
+  db.button('fg', '  > Find Text', '<cmd>Telescope live_grep<CR>'),
+  db.button('r', '  > Recent' , '<cmd>Telescope oldfiles<CR>'),
+  -- db.button('fm', '  > Bookmarks'),
+  db.button('s', '  > Settings' , '<cmd>e ~/.config/nvim/init.lua | Neotree toggle<CR>'),
 }
+
+local function footer()
+    local total_plugins = #vim.tbl_keys(packer_plugins)
+    local version = vim.version()
+    local nvim_version_info = '   v' .. version.major .. '.' .. version.minor .. '.' .. version.patch
+
+    return ' ' .. total_plugins .. ' plugins' .. nvim_version_info
+end
+
+db.section.footer.val = { '', footer() }
+
+alpha.setup(db.opts)
