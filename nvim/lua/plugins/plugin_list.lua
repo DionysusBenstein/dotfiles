@@ -129,13 +129,6 @@ local plugin_list = {
     end
   },
 
-  -- ['akinsho/bufferline.nvim'] = {
-  --   tag = 'v3.*',
-  --   config = function()
-  --     require('bufferline').setup()
-  --   end
-  -- },
-
   ['hrsh7th/nvim-cmp'] = {
     requires = {
       'L3MON4D3/LuaSnip',

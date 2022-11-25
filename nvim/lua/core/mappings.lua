@@ -1,4 +1,3 @@
-local utils = require('utils')
 local bind = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
@@ -27,7 +26,6 @@ bind('t', '<C-l>', '<cmd>wincmd l<CR>', opts)
 
 bind('n', '<leader>fn' , '<cmd>enew<cr>', opts)
 
-
 -- moving between visible buffers 
 bind('n', '<C-h>', require('smart-splits').move_cursor_left, opts)
 bind('n', '<C-j>', require('smart-splits').move_cursor_down, opts)
@@ -39,7 +37,6 @@ bind('n', '<leader>ld', vim.diagnostic.open_float, opts)
 bind('n', '[d', vim.diagnostic.goto_prev, opts)
 bind('n', ']d', vim.diagnostic.goto_next, opts)
 bind('n', '<leader>q', vim.diagnostic.setloclist, opts)
-
 
 -- terminal
 bind('n', '<leader>t', '<cmd>ToggleTerm<CR>', opts)
@@ -63,3 +60,14 @@ bind('n','gr', '<cmd>Trouble lsp_references<CR>', opts)
 
 -- symbols-outline
 bind('n', '<leader>s', ':SymbolsOutline<CR>', opts)
+
+-- gitsigns
+bind('n', '<leader>gj', require('gitsigns').next_hunk, opts)
+bind('n', '<leader>gk', require('gitsigns').prev_hunk, opts)
+bind('n', '<leader>gl', require('gitsigns').blame_line, opts)
+bind('n', '<leader>gp', require('gitsigns').preview_hunk, opts)
+bind('n', '<leader>gh', require('gitsigns').reset_hunk, opts)
+bind('n', '<leader>gr', require('gitsigns').reset_buffer, opts)
+bind('n', '<leader>gs', require('gitsigns').stage_hunk, opts)
+bind('n', '<leader>gu', require('gitsigns').undo_stage_hunk, opts)
+bind('n', '<leader>gd', require('gitsigns').diffthis, opts)
