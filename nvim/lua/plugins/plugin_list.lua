@@ -47,6 +47,12 @@ local plugin_list = {
     end
   },
 
+  ['mrjones2014/smart-splits.nvim'] = {
+    config = function()
+      require('plugins.config.smart_splits')
+    end,
+  },
+
   ['lukas-reineke/indent-blankline.nvim'] = {
     config = function()
       require('plugins.config.indent_blankline')
@@ -122,6 +128,13 @@ local plugin_list = {
       require('nvim-navic').setup()
     end
   },
+
+  -- ['akinsho/bufferline.nvim'] = {
+  --   tag = 'v3.*',
+  --   config = function()
+  --     require('bufferline').setup()
+  --   end
+  -- },
 
   ['hrsh7th/nvim-cmp'] = {
     requires = {

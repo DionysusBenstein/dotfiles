@@ -13,8 +13,4 @@ M.initialize_packer = function()
   return false
 end
 
-M.get_icon = function(kind)
-  
-end
-
 return M

@@ -5,9 +5,4 @@ lualine.setup {
   options = {
     theme = 'auto'
   },
-  winbar = {
-    lualine_c = {
-      { navic.get_location, cond = navic.is_available },
-    }
-  },
 }

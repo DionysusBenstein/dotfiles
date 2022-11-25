@@ -1,3 +1,4 @@
+local utils = require('utils')
 local bind = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
@@ -15,7 +16,7 @@ bind('v', '<Tab>', '>gv', opts)
 
 bind('i', 'jk', '<ESC>', opts)
 bind('n', '<space>h', '<cmd>noh<cr>', opts)
-bind('n', '<leader><leader>', '<cmd>Neotree toggle<CR>', opts)
+bind('n', '<leader>e', '<cmd>Neotree toggle<CR>', opts)
 
 bind('t', '<esc>', [[<C-\><C-n>]], opts)
 bind('t', 'jk', [[<C-\><C-n>]], opts)
@@ -26,17 +27,18 @@ bind('t', '<C-l>', '<cmd>wincmd l<CR>', opts)
 
 bind('n', '<leader>fn' , '<cmd>enew<cr>', opts)
 
+
 -- moving between visible buffers 
-bind('n', '<C-l>', '<C-w>l', opts)
-bind('n', '<C-h>', '<C-w>h', opts)
-bind('n', '<C-j>', '<C-w>j', opts)
-bind('n', '<C-k>', '<C-w>k', opts)
+bind('n', '<C-h>', require('smart-splits').move_cursor_left, opts)
+bind('n', '<C-j>', require('smart-splits').move_cursor_down, opts)
+bind('n', '<C-k>', require('smart-splits').move_cursor_up, opts)
+bind('n', '<C-l>', require('smart-splits').move_cursor_right, opts)
 
 -- LSP
-bind('n', '<space>e', vim.diagnostic.open_float, opts)
+bind('n', '<leader>ld', vim.diagnostic.open_float, opts)
 bind('n', '[d', vim.diagnostic.goto_prev, opts)
 bind('n', ']d', vim.diagnostic.goto_next, opts)
-bind('n', '<space>q', vim.diagnostic.setloclist, opts)
+bind('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
 
 -- terminal
@@ -52,7 +54,7 @@ bind('s', '<C-k>', '<cmd>lua require("luasnip").jump(-1)<CR>', opts)
 -- telescope
 bind('n', 'ff', '<cmd>Telescope find_files<CR>', opts)
 bind('n', 'fg', '<cmd>Telescope live_grep<CR>', opts)
-bind('n', 'fb', '<cmd>Telescope buffers<CR>', opts) 
+bind('n', 'fb', '<cmd>Telescope buffers<CR>', opts)
 bind('n', 'fh', '<cmd>Telescope help_tags<CR>', opts)
 
 -- trouble

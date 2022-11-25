@@ -39,6 +39,9 @@ local function footer()
     return ' ' .. total_plugins .. ' plugins' .. nvim_version_info
 end
 
-db.section.footer.val = { '', footer() }
+db.section.footer.val = {
+  '',
+  footer()
+}
 
 alpha.setup(db.opts)
