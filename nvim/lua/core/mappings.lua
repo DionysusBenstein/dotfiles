@@ -38,6 +38,10 @@ bind('n', '[d', vim.diagnostic.goto_prev, opts)
 bind('n', ']d', vim.diagnostic.goto_next, opts)
 bind('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
+-- aerial
+bind('n', '<leader>lS', '<cmd>AerialToggle!<CR>')
+bind('n', '<leader>ls', require('telescope').extensions.aerial.aerial, opts)
+
 -- terminal
 bind('n', '<leader>t', '<cmd>ToggleTerm<CR>', opts)
 bind('t', '<leader>t', '<cmd>ToggleTerm<CR>', opts)
@@ -57,9 +61,6 @@ bind('n', 'fh', '<cmd>Telescope help_tags<CR>', opts)
 -- trouble
 bind('n', '<leader>x', '<cmd>TroubleToggle<CR>', opts)
 bind('n','gr', '<cmd>Trouble lsp_references<CR>', opts)
-
--- symbols-outline
-bind('n', '<leader>s', ':SymbolsOutline<CR>', opts)
 
 -- gitsigns
 bind('n', '<leader>gj', require('gitsigns').next_hunk, opts)

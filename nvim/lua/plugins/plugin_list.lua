@@ -83,6 +83,12 @@ local plugin_list = {
     requires = { 'nvim-lua/plenary.nvim' }
   },
 
+  ['stevearc/aerial.nvim'] = {
+    config = function()
+      require('aerial').setup()
+    end
+  },
+
   ['ray-x/lsp_signature.nvim'] = {
     config = function()
       require('lsp_signature').setup()
@@ -107,12 +113,6 @@ local plugin_list = {
   ['kylechui/nvim-surround'] = {
     config = function()
         require('nvim-surround').setup()
-    end
-  },
-
-  ['simrat39/symbols-outline.nvim'] = {
-    config = function()
-      require('symbols-outline').setup()
     end
   },
 
