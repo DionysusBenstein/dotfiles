@@ -28,7 +28,8 @@ local on_attach = function(client, bufnr)
   bind('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
   bind('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
   bind('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-  bind('n', 'gr', vim.lsp.buf.references, bufopts)
+  -- bind('n', 'gr', vim.lsp.buf.references, bufopts)
+  bind('n', 'gr', require('telescope.builtin').lsp_references, bufopts)
   bind('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 

@@ -60,7 +60,6 @@ bind('n', 'fh', '<cmd>Telescope help_tags<CR>', opts)
 
 -- trouble
 bind('n', '<leader>x', '<cmd>TroubleToggle<CR>', opts)
-bind('n','gr', '<cmd>Trouble lsp_references<CR>', opts)
 
 -- gitsigns
 bind('n', '<leader>gj', require('gitsigns').next_hunk, opts)
@@ -72,3 +71,6 @@ bind('n', '<leader>gr', require('gitsigns').reset_buffer, opts)
 bind('n', '<leader>gs', require('gitsigns').stage_hunk, opts)
 bind('n', '<leader>gu', require('gitsigns').undo_stage_hunk, opts)
 bind('n', '<leader>gd', require('gitsigns').diffthis, opts)
+bind('n', '<leader>gt', '<cmd>Telescope git_status<CR>', opts)
+bind('n', '<leader>gb', '<cmd>Telescope git_branches<CR>', opts)
+bind('n', '<leader>gc', '<cmd>Telescope git_commits<CR>', opts)
