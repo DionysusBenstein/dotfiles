@@ -125,7 +125,7 @@ local plugin_list = {
   ['SmiteshP/nvim-navic'] = {
     requires = 'neovim/nvim-lspconfig',
     config = function()
-      require('nvim-navic').setup()
+      require('plugins.config.breadcrumbs')
     end
   },
 

@@ -1,13 +1,17 @@
 local cmp = require('cmp')
+local icons = require('icons')
 local lspkind = require('lspkind')
 
 cmp.setup {
   formatting = {
-    format = lspkind.cmp_format {
-      mode = 'symbol',
-      maxwidth = 50,
-      ellipsis_char = '...',
-    }
+    -- format = lspkind.cmp_format {
+    --   mode = 'symbol',
+    --   maxwidth = 50,
+    --   ellipsis_char = '...',
+    -- },
+    kind_icons = icons.kind
+
+    -- format = icons.kind
   },
 
   snippet = {

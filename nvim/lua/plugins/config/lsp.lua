@@ -3,17 +3,16 @@ local bind = vim.keymap.set
 
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  --[[ if client.server_capabilities.documentSymbolProvider then
+  if client.server_capabilities.documentSymbolProvider then
     local navic = require('nvim-navic')
     navic.attach(client, bufnr)
-  end ]]
+  end
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  require('lsp_signature').on_attach({}, bufnr)
+
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
-  require 'lsp_signature'.on_attach({}, bufnr)
 
   bind('n', 'gD', vim.lsp.buf.declaration, bufopts)
   bind('n', 'gd', vim.lsp.buf.definition, bufopts)
@@ -28,7 +27,6 @@ local on_attach = function(client, bufnr)
   bind('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
   bind('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
   bind('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-  -- bind('n', 'gr', vim.lsp.buf.references, bufopts)
   bind('n', 'gr', require('telescope.builtin').lsp_references, bufopts)
   bind('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
@@ -56,7 +54,7 @@ end
 mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
-      on_attach = on_attach(),
+      on_attach = on_attach,
       capabilities = capabilities
     }
   end
