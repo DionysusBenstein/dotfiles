@@ -36,7 +36,6 @@ mason_lspconfig.setup {
     --[[ Language Servers ]]
     'tsserver',
     'sumneko_lua',
-    'bashls',
     'jsonls',
     'yamlls',
     'html',

@@ -1,17 +1,25 @@
 local cmp = require('cmp')
 local icons = require('icons')
-local lspkind = require('lspkind')
 
 cmp.setup {
   formatting = {
-    -- format = lspkind.cmp_format {
-    --   mode = 'symbol',
-    --   maxwidth = 50,
-    --   ellipsis_char = '...',
-    -- },
-    kind_icons = icons.kind
+    fields = { 'kind', 'abbr', 'menu' },
+    format = function(entry, vim_item)
+      vim_item.kind = icons.kind[vim_item.kind]
 
-    -- format = icons.kind
+      vim_item.menu = ({
+        buffer = '[Buffer]',
+        nvim_lsp = '[LSP]',
+        nvim_lua = '[Lua]',
+        latex_symbols = '[LaTeX]',
+        path = '[Path]',
+        calc = '[Calc]',
+        luasnip = '[LuaSnip]',
+        vsnip = '[Snippet]',
+        treesitter = '[TreeSitter]',
+      })[entry.source.name]
+      return vim_item
+    end
   },
 
   snippet = {
@@ -30,17 +38,17 @@ cmp.setup {
   }),
 
   sources = cmp.config.sources({
-   { name = 'nvim_lsp' },
-   { name = 'nvim_lsp_signature_help' },
-   { name = 'path' },
-   { name = 'buffer' },
-   { name = 'luasnip' },
-   { name = 'nvim_lua' },
-  })
- }
+    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp_signature_help' },
+    { name = 'path' },
+    { name = 'buffer' },
+    { name = 'luasnip' },
+    { name = 'nvim_lua' },
+  }),
+}
 
- -- Set configuration for specific filetype.
- --[[ cmp.setup.filetype('gitcommit', {
+-- Set configuration for specific filetype.
+--[[ cmp.setup.filetype('gitcommit', {
    sources = cmp.config.sources({
      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
    }, {
@@ -48,17 +56,17 @@ cmp.setup {
    })
  }) ]]
 
- cmp.setup.cmdline({ '/', '?' }, {
-   mapping = cmp.mapping.preset.cmdline(),
-   sources = {
-     { name = 'buffer' }
-   }
- })
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
 
- cmp.setup.cmdline(':', {
-   mapping = cmp.mapping.preset.cmdline(),
-   sources = cmp.config.sources({
-     { name = 'path' },
-     { name = 'cmdline' }
-   })
- })
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' },
+    { name = 'cmdline' }
+  })
+})
