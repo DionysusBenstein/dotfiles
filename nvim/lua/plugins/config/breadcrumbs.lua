@@ -1,47 +1,108 @@
 local navic = require('nvim-navic')
 local icons = require('icons')
+local webdev_icons = require('nvim-web-devicons')
+local utils = require('utils')
 
-local get_filename = function()
-  local filename = vim.fn.expand "%:t"
-  local extension = vim.fn.expand "%:e"
+local M = {}
 
-  if not filename == nil or filename == '' then
-    local file_icon, file_icon_color =
-      require('nvim-web-devicons').get_icon_color(filename, extension, { default = true })
+M.winbar_filetype_exclude = {
+  'help',
+  'startify',
+  'dashboard',
+  'packer',
+  'neogitstatus',
+  'NvimTree',
+  'Trouble',
+  'alpha',
+  'lir',
+  'Outline',
+  'spectre_panel',
+  'toggleterm',
+}
 
-    local hl_group = 'FileIconColor' .. extension
+local excludes = function()
+  if vim.tbl_contains(M.winbar_filetype_exclude, vim.bo.filetype) then
+    vim.opt_local.winbar = nil
+    return true
+  end
+  return false
+end
 
-    vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
-    if file_icon == nil or file_icon == '' then
-      file_icon = lvim.icons.kind.File
-    end
+local function get_filename()
+  local filename = vim.fn.expand("%:t")
+  local extension = vim.fn.expand("%:e")
 
-    local buf_ft = vim.bo.filetype
+  local file_icon, file_icon_color = webdev_icons.get_icon_color(filename, extension, { default = true })
+  local hl_group = "FileIconColor" .. extension
 
-    if buf_ft == 'dapui_breakpoints' then
-      file_icon = icons.ui.Bug
-    end
+  vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
 
-    if buf_ft == 'dapui_stacks' then
-      file_icon = icons.ui.Stacks
-    end
+  if utils.is_empty(file_icon) then
+    file_icon = icons.kind.File
+  end
 
-    if buf_ft == 'dapui_scopes' then
-      file_icon = icons.ui.Scopes
-    end
+  local sep = vim.loop.os_uname().sysname == 'Windows' and '\\' or '/'
+  local path_list = vim.split(string.gsub(vim.fn.expand '%:~:.:h', '%%', ''), sep)
+  local file_path = ''
 
-    if buf_ft == 'dapui_watches' then
-      file_icon = icons.ui.Watches
-    end
+  for _, cur in ipairs(path_list) do
+    file_path = (cur == '.' or cur == '~') and '' or
+        file_path .. cur .. ' ' .. '%#LspSagaWinbarSep#>%*' .. ' %*'
+  end
 
-    local navic_text = vim.api.nvim_get_hl_by_name("Normal", true)
-    vim.api.nvim_set_hl(0, "Winbar", { fg = navic_text.foreground })
+  local mod = ''
+  if utils.get_buf_option('mod') then
+    mod = icons.git.FileUnstaged
+  end
 
-    return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#Winbar#" .. filename .. "%*"
+  return " "
+    .. file_path
+    .. "%#"
+    .. hl_group
+    .. "#"
+    .. file_icon
+    .. "%*"
+    .. " "
+    .. "%#Winbar#"
+    .. filename
+    .. "%*"
+    .. mod
+end
+
+local function get_location()
+  local location = navic.get_location()
+
+  if not utils.is_empty(location) then
+    return "%#WinBarContext#" .. " " .. icons.ui.ChevronRight .. " " .. location .. "%*"
+  end
+
+  return ''
+end
+
+function M.get_winbar()
+  if excludes() then
+    return ''
+  end
+
+  if navic.is_available() then
+    return "%#WinBarSeparator#"
+        .. get_filename()
+        .. get_location()
+        .. "%#WinBarSeparator#"
+        .. "%*"
+  else
+    return "%#WinBarSeparator#" .. "%*" .. get_filename() .. "%#WinBarSeparator#" .. "%*"
   end
 end
 
+vim.opt.winbar = "%{%v:lua.require'plugins.config.breadcrumbs'.get_winbar()%}"
+
 navic.setup {
+  highlight = true,
+  separator = ' ' .. icons.ui.ChevronRight .. ' ',
+  depth_limit = 0,
+  depth_limit_indicator = '..',
+
   icons = {
     Array = icons.kind.Array .. ' ',
     Boolean = icons.kind.Boolean,
@@ -78,11 +139,6 @@ navic.setup {
     Value = icons.kind.Value .. ' ',
     Variable = icons.kind.Variable .. ' ',
   },
-
-  highlight = true,
-  separator = ' ' .. icons.ui.ChevronRight .. ' ',
-  depth_limit = 0,
-  depth_limit_indicator = '..',
 }
 
-vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+return M

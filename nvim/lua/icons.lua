@@ -15,6 +15,7 @@ return {
     Octoface = '',
     Branch = '',
   },
+  -- { '😡', '😥', '😤', '😐' }
   diagnostics = {
     BoldError = '',
     Error = '',
@@ -78,5 +79,6 @@ return {
     Stacks = ' ',
     Scopes = '',
     Watches = '',
+    Link = ' ',
   }
 }
