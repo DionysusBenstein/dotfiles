@@ -129,7 +129,7 @@ local plugin_list = {
     end
   },
 
-  ['hrsh8th/nvim-cmp'] = {
+  ['hrsh7th/nvim-cmp'] = {
     requires = {
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',

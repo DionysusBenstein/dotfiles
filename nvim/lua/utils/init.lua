@@ -23,7 +23,7 @@ M.get_buf_option = function(opt)
 end
 
 M.is_empty = function(s)
-  return s == nil or s == ""
+  return s == nil or s == ''
 end
 
 return M

@@ -29,11 +29,11 @@ local excludes = function()
 end
 
 local function get_filename()
-  local filename = vim.fn.expand("%:t")
-  local extension = vim.fn.expand("%:e")
+  local filename = vim.fn.expand('%:t')
+  local extension = vim.fn.expand('%:e')
 
   local file_icon, file_icon_color = webdev_icons.get_icon_color(filename, extension, { default = true })
-  local hl_group = "FileIconColor" .. extension
+  local hl_group = 'FileIconColor' .. extension
 
   vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
 
@@ -41,39 +41,45 @@ local function get_filename()
     file_icon = icons.kind.File
   end
 
+  if utils.is_empty(filename) then
+    filename = 'Untitled'
+  end
+
   local sep = vim.loop.os_uname().sysname == 'Windows' and '\\' or '/'
   local path_list = vim.split(string.gsub(vim.fn.expand '%:~:.:h', '%%', ''), sep)
   local file_path = ''
 
-  for _, cur in ipairs(path_list) do
-    file_path = (cur == '.' or cur == '~') and '' or
+  if #path_list > 1 then
+    for _, cur in ipairs(path_list) do
+      file_path = (cur == '.' or cur == '~') and '' or
         file_path .. cur .. ' ' .. '%#LspSagaWinbarSep#>%*' .. ' %*'
+    end
   end
 
-  local mod = ''
-  if utils.get_buf_option('mod') then
-    mod = icons.git.FileUnstaged
-  end
+  -- local mod = ''
+  -- if utils.get_buf_option('mod') then
+  --   mod = icons.git.FileUnstaged
+  -- end
 
-  return " "
+  return ' '
     .. file_path
-    .. "%#"
+    .. '%#'
     .. hl_group
-    .. "#"
+    .. '#'
     .. file_icon
-    .. "%*"
-    .. " "
-    .. "%#Winbar#"
+    .. '%*'
+    .. ' '
+    .. '%#Winbar#'
     .. filename
-    .. "%*"
-    .. mod
+    .. '%*'
+    -- .. mod
 end
 
 local function get_location()
   local location = navic.get_location()
 
   if not utils.is_empty(location) then
-    return "%#WinBarContext#" .. " " .. icons.ui.ChevronRight .. " " .. location .. "%*"
+    return '%#WinBarContext#' .. ' ' .. icons.ui.ChevronRight .. ' ' .. location .. '%*'
   end
 
   return ''
@@ -85,13 +91,13 @@ function M.get_winbar()
   end
 
   if navic.is_available() then
-    return "%#WinBarSeparator#"
+    return '%#WinBarSeparator#'
         .. get_filename()
         .. get_location()
-        .. "%#WinBarSeparator#"
-        .. "%*"
+        .. '%#WinBarSeparator#'
+        .. '%*'
   else
-    return "%#WinBarSeparator#" .. "%*" .. get_filename() .. "%#WinBarSeparator#" .. "%*"
+    return '%#WinBarSeparator#' .. '%*' .. get_filename() .. '%#WinBarSeparator#' .. '%*'
   end
 end
 
