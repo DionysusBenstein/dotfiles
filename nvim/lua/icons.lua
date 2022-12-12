@@ -80,5 +80,8 @@ return {
     Scopes = '',
     Watches = '',
     Link = ' ',
+    ActiveLsp = ' ',
+    ActiveTS = '綠',
+    Tree = '',
   }
 }

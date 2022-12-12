@@ -49,11 +49,9 @@ local function get_filename()
   local path_list = vim.split(string.gsub(vim.fn.expand '%:~:.:h', '%%', ''), sep)
   local file_path = ''
 
-  if #path_list > 1 then
-    for _, cur in ipairs(path_list) do
-      file_path = (cur == '.' or cur == '~') and '' or
-        file_path .. cur .. ' ' .. '%#LspSagaWinbarSep#>%*' .. ' %*'
-    end
+  for _, cur in ipairs(path_list) do
+    file_path = (cur == '.' or cur == '~') and '' or
+    file_path .. cur .. ' ' .. '%#LspSagaWinbarSep#>%*' .. ' %*'
   end
 
   -- local mod = ''

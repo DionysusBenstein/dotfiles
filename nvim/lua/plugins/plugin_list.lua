@@ -72,7 +72,9 @@ local plugin_list = {
   },
 
   ['nvim-treesitter/nvim-treesitter'] = {
-    run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+    run = function()
+      require('nvim-treesitter.install').update({ with_sync = true })
+    end,
     config = function()
       require('plugins.config.treesitter')
     end
@@ -85,7 +87,7 @@ local plugin_list = {
 
   ['stevearc/aerial.nvim'] = {
     config = function()
-      require('aerial').setup()
+      require('plugins.config.aerial')
     end
   },
 
