@@ -43,6 +43,17 @@ local function get_filename()
 
   if utils.is_empty(filename) then
     filename = 'Untitled'
+
+    return ' '
+        .. '%#'
+        .. hl_group
+        .. '#'
+        .. file_icon
+        .. '%*'
+        .. ' '
+        .. '%#Winbar#'
+        .. filename
+        .. '%*'
   end
 
   local sep = vim.loop.os_uname().sysname == 'Windows' and '\\' or '/'
@@ -51,7 +62,7 @@ local function get_filename()
 
   for _, cur in ipairs(path_list) do
     file_path = (cur == '.' or cur == '~') and '' or
-    file_path .. cur .. ' ' .. '%#LspSagaWinbarSep#>%*' .. ' %*'
+        file_path .. cur .. ' ' .. '%#LspSagaWinbarSep#>%*' .. ' %*'
   end
 
   -- local mod = ''
@@ -60,17 +71,17 @@ local function get_filename()
   -- end
 
   return ' '
-    .. file_path
-    .. '%#'
-    .. hl_group
-    .. '#'
-    .. file_icon
-    .. '%*'
-    .. ' '
-    .. '%#Winbar#'
-    .. filename
-    .. '%*'
-    -- .. mod
+      .. file_path
+      .. '%#'
+      .. hl_group
+      .. '#'
+      .. file_icon
+      .. '%*'
+      .. ' '
+      .. '%#Winbar#'
+      .. filename
+      .. '%*'
+  -- .. mod
 end
 
 local function get_location()
