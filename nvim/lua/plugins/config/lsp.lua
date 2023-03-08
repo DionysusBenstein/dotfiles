@@ -35,7 +35,7 @@ mason_lspconfig.setup {
   ensure_installed = {
     --[[ Language Servers ]]
     'tsserver',
-    'sumneko_lua',
+    'lua_ls',
     'jsonls',
     'yamlls',
     'html',
