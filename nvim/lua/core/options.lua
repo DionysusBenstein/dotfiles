@@ -34,6 +34,11 @@ local options = {
   -- Split 
   splitbelow = true,
   splitright = true,
+
+  -- Fold
+  foldmethod = "expr",
+  foldexpr = "nvim_treesitter#foldexpr()",
+  foldenable = false,
 }
 
 local globals = {
