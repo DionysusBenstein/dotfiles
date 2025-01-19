@@ -36,9 +36,10 @@ local options = {
   splitright = true,
 
   -- Fold
-  foldmethod = "expr",
-  foldexpr = "nvim_treesitter#foldexpr()",
-  foldenable = false,
+  foldcolumn = '1',
+  foldlevel = 99 ,
+  foldlevelstart = 99,
+  foldenable = true,
 }
 
 local globals = {

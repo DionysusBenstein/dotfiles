@@ -1,8 +1,10 @@
 local conditions = require('plugins.config.lualine.conditions')
 local icons = require('icons')
-local colors = require('tokyonight.colors').setup()
+local colors = require('lualine.themes.gruvbox')
 
 return {
+  options = { theme = 'gruvbox' },
+
   branch = {
     'branch',
     icon = icons.git.Branch
@@ -10,11 +12,11 @@ return {
 
   diff = {
     'diff',
-    -- symbols = {
-    --   added = icons.git.LineAdded .. ' ',
-    --   modified = icons.git.LineModified .. ' ',
-    --   removed = icons.git.LineRemoved .. ' '
-    -- },
+    symbols = {
+      added = icons.git.LineAdded .. ' ',
+      modified = icons.git.LineModified .. ' ',
+      removed = icons.git.LineRemoved .. ' '
+    },
     cond = conditions.hide_in_width,
   },
 
@@ -50,7 +52,7 @@ return {
     color = function()
       local buf = vim.api.nvim_get_current_buf()
       local ts = vim.treesitter.highlighter.active[buf]
-      return { fg = ts and not vim.tbl_isempty(ts) and colors.green or colors.dark }
+      return { fg = ts and not vim.tbl_isempty(ts) and colors.normal.a.bg or colors.normal.c.bg }
     end,
 
     cond = conditions.hide_in_width,

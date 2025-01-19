@@ -11,10 +11,10 @@ for _, source in ipairs {
   end
 end
 
-local colorscheme = 'tokyonight'
+local colorscheme = 'gruvbox'
 
 local status_ok, _ = pcall(require, colorscheme)
 if status_ok then
   vim.cmd('colorscheme ' .. colorscheme)
+  -- vim.cmd('set background=dark')
 end
-

@@ -40,6 +40,8 @@ mason_lspconfig.setup {
     'yamlls',
     'html',
     'cssls',
+    'pyright',
+    'gopls',
   }
 }
 

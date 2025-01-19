@@ -1,5 +1,6 @@
-local ib = require('indent_blankline')
+local ibl = require('indent_blankline')
 
-ib.setup {
+ibl.setup {
   show_current_context = true,
+  main = 'ibl',
 }

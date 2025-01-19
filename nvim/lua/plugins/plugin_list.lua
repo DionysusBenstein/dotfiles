@@ -1,7 +1,7 @@
 local plugin_list = {
   ['wbthomason/packer.nvim'] = {},
 
-  ['folke/tokyonight.nvim'] = {},
+  ['ellisonleao/gruvbox.nvim'] = {},
 
   ['kyazdani42/nvim-web-devicons'] = {},
 
@@ -73,7 +73,8 @@ local plugin_list = {
 
   ['nvim-treesitter/nvim-treesitter'] = {
     run = function()
-      require('nvim-treesitter.install').update({ with_sync = true })
+      -- require('nvim-treesitter.install').update({ with_sync = true })
+      require("nvim-treesitter.install").update({ with_sync = true }).prefer_git = true
     end,
     config = function()
       require('plugins.config.treesitter')
@@ -81,7 +82,7 @@ local plugin_list = {
   },
 
   ['nvim-telescope/telescope.nvim'] = {
-    tag = '0.1.0',
+    tag = '0.1.8',
     requires = { 'nvim-lua/plenary.nvim' }
   },
 
