@@ -1,5 +1,7 @@
 local plugin_list = {
-  ['wbthomason/packer.nvim'] = {},
+  ['folke/lazy.nvim'] = {
+    version = '*',
+  },
 
   ['ellisonleao/gruvbox.nvim'] = {},
 
@@ -21,7 +23,7 @@ local plugin_list = {
 
   ['nvim-neo-tree/neo-tree.nvim'] = {
     branch = 'v2.x',
-    requires = {
+    dependencies = {
       'MunifTanjim/nui.nvim',
     },
     config = function()
@@ -54,6 +56,8 @@ local plugin_list = {
   },
 
   ['lukas-reineke/indent-blankline.nvim'] = {
+    version = '^3.0.0',
+    main = 'ibl',
     config = function()
       require('plugins.config.indent_blankline')
     end
@@ -72,18 +76,16 @@ local plugin_list = {
   },
 
   ['nvim-treesitter/nvim-treesitter'] = {
-    run = function()
-      -- require('nvim-treesitter.install').update({ with_sync = true })
-      require("nvim-treesitter.install").update({ with_sync = true }).prefer_git = true
-    end,
     config = function()
       require('plugins.config.treesitter')
     end
   },
 
   ['nvim-telescope/telescope.nvim'] = {
-    tag = '0.1.8',
-    requires = { 'nvim-lua/plenary.nvim' }
+    dependencies = { 
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    }
   },
 
   ['stevearc/aerial.nvim'] = {
@@ -101,7 +103,7 @@ local plugin_list = {
   ['onsails/lspkind-nvim'] = {},
 
   ['folke/trouble.nvim'] = {
-    requires = 'kyazdani42/nvim-web-devicons',
+    dependencies = 'kyazdani42/nvim-web-devicons',
     config = function()
       require('trouble').setup()
     end,
@@ -126,14 +128,14 @@ local plugin_list = {
   },
 
   ['SmiteshP/nvim-navic'] = {
-    requires = 'neovim/nvim-lspconfig',
+    dependencies = 'neovim/nvim-lspconfig',
     config = function()
       require('plugins.config.breadcrumbs')
     end
   },
 
   ['hrsh7th/nvim-cmp'] = {
-    requires = {
+    dependencies = {
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
@@ -155,7 +157,7 @@ local plugin_list = {
   },
 
   ['neovim/nvim-lspconfig'] = {
-    requires = {
+    dependencies = {
       'williamboman/mason-lspconfig.nvim',
     },
     config = function()

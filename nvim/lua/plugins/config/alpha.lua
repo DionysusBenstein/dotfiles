@@ -33,7 +33,12 @@ db.section.buttons.val = {
 }
 
 local function footer()
-    local total_plugins = #vim.tbl_keys(packer_plugins)
+    local total_plugins = 0
+    local lazy_ok, lazy = pcall(require, 'lazy')
+    if lazy_ok then
+      local plugins = lazy.plugins()
+      total_plugins = #plugins
+    end
     local version = vim.version()
     local nvim_version_info =
       '  ' .. icons.ui.Version

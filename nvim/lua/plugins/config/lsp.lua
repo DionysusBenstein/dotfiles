@@ -1,8 +1,11 @@
-local mason_lspconfig = require('mason-lspconfig')
+local mason_lspconfig_ok, mason_lspconfig = pcall(require, 'mason-lspconfig')
+if not mason_lspconfig_ok then
+  return
+end
+
 local bind = vim.keymap.set
 
 local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   if client.server_capabilities.documentSymbolProvider then
@@ -31,20 +34,6 @@ local on_attach = function(client, bufnr)
   bind('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
-mason_lspconfig.setup {
-  ensure_installed = {
-    --[[ Language Servers ]]
-    'tsserver',
-    'lua_ls',
-    'jsonls',
-    'yamlls',
-    'html',
-    'cssls',
-    'pyright',
-    'gopls',
-  }
-}
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 
@@ -52,11 +41,48 @@ if cmp_nvim_lsp_ok then
   capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 end
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
+mason_lspconfig.setup {
+  ensure_installed = {
+    --[[ Language Servers ]]
+    'typescript-language-server',
+    'lua_ls',
+    'jsonls',
+    'yamlls',
+    'html',
+    'cssls',
+    'pyright',
+    'gopls',
+    'rust-analyzer',
+  }
+}
+
+if mason_lspconfig.setup_handlers then
+  mason_lspconfig.setup_handlers {
+    function(server_name)
+      vim.lsp.config(server_name, {
+        on_attach = on_attach,
+        capabilities = capabilities
+      })
+      vim.lsp.enable(server_name)
+    end
+  }
+else
+  local servers = {
+    'typescript-language-server',
+    'lua_ls',
+    'jsonls',
+    'yamlls',
+    'html',
+    'cssls',
+    'pyright',
+    'gopls',
+    'rust-analyzer',
+  }
+  for _, server_name in ipairs(servers) do
+    vim.lsp.config(server_name, {
       on_attach = on_attach,
       capabilities = capabilities
-    }
+    })
+    vim.lsp.enable(server_name)
   end
-}
+end

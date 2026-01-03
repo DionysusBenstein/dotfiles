@@ -18,7 +18,7 @@ illuminate.configure {
     'alpha',
     'NvimTree',
     'neo-tree',
-    'packer',
+    'lazy',
     'neogitstatus',
     'Trouble',
     'lir',

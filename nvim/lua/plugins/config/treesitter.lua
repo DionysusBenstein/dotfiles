@@ -1,4 +1,7 @@
-local treesitter = require('nvim-treesitter.configs')
+local treesitter_ok, treesitter = pcall(require, 'nvim-treesitter.configs')
+if not treesitter_ok then
+  return
+end
 
 treesitter.setup {
   ensure_installed = {
@@ -28,7 +31,7 @@ treesitter.setup {
     'json',
     'json5',
     'jsonc',
-    'latex',
+    -- 'latex', -- Requires tree-sitter CLI to generate grammar
     'llvm',
     'lua',
     'make',
@@ -54,7 +57,8 @@ treesitter.setup {
     'yaml',
   },
 
-  auto_install = true,
+  -- sync_install = false,
+  -- auto_install = true,
 
   disable = function(_, buf)
     local max_filesize = 100 * 1024 -- 100 KB

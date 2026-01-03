@@ -1,6 +1,18 @@
-local ibl = require('indent_blankline')
+local ibl = require('ibl')
 
 ibl.setup {
-  show_current_context = true,
-  main = 'ibl',
+  indent = {
+    char = '│',
+    highlight = 'IblIndent',
+  },
+  scope = {
+    enabled = true,
+    show_start = true,
+    show_end = true,
+    highlight = 'IblScope',
+  },
+  whitespace = {
+    highlight = 'IblWhitespace',
+    remove_blankline_trail = true,
+  },
 }
